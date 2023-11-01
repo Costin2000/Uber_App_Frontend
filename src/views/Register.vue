@@ -1,12 +1,7 @@
 <template>
     
   <div class="flex min-h-full flex-1">
-    <transition name="slide-fade">
-      <div v-if="error_message" class="notification absolute top-4 right-4">
-        <span>{{ error_message }}</span>
-        <button @click="clearError" class="ml-2">&times;</button>
-      </div>
-    </transition>
+    <notification :message="error_message" @clear="clearError" />
     <div
       class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24"
     >
