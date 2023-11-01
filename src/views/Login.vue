@@ -28,7 +28,7 @@
 
         <div class="mt-10">
           <div>
-            <form action="#" method="POST" class="space-y-6">
+            <form @submit.prevent="submitForm" class="space-y-6">
               <div>
                 <label
                   for="email"
@@ -42,6 +42,7 @@
                     type="email"
                     autocomplete="email"
                     required=""
+                    v-model="email"
                     class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -60,6 +61,7 @@
                     type="password"
                     autocomplete="current-password"
                     required=""
+                    v-model="password"
                     class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -109,7 +111,52 @@
         alt=""
       />
     </div>
+    <notification :message="error_message" @clear="clearError" />
   </div>
 </template>
 
-<script></script>
+<script>
+import axios from "axios";
+export default {
+  data() {
+    return {
+      email: "",
+      password: "",
+      error_message: "",
+    };
+  },
+  methods: {
+    clearError() {
+        this.error_message = ''
+    },
+    async submitForm() {
+      const formData = {
+        email: this.email,
+        password: this.password,
+      };
+      console.log(formData);
+
+      try {
+        const response = await axios.post("http://localhost:8081/authenticate", formData);
+        console.log("User logged in:", response.data);
+        const now = new Date();
+        const item = {
+            data: response.data.data,
+            expiry: now.getTime() + 24 * 60 * 60 * 1000, // Adding hoursUntilExpiry hours to the current time
+        };
+        // Save user data to local storage
+        localStorage.setItem("user", JSON.stringify(item));
+        this.$emit('log_in');
+        this.$router.push("/");
+      } catch (error) {
+        if (error.response && error.response.data && error.response.data.message) {
+          const errorMessage = error.response.data.message;
+          console.error("Error logging in:", errorMessage);
+          this.error_message = errorMessage;
+          console.log(this.error_message)
+        }
+      }
+    },
+  }
+}
+</script>

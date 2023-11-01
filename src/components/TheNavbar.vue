@@ -65,12 +65,20 @@
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
             <router-link
               to="/"
-              :class="current_page === 'home' ? 'bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium' : 'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'"
+              :class="
+                current_page === 'home'
+                  ? 'bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium'
+                  : 'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
+              "
               >Home</router-link
             >
             <router-link
               to="/profile"
-              :class="current_page === 'profile' ? 'bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium' : 'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'"
+              :class="
+                current_page === 'profile'
+                  ? 'bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium'
+                  : 'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
+              "
               >Profile</router-link
             >
           </div>
@@ -149,7 +157,9 @@
                 -->
               <div
                 v-if="menu_opened"
-                :class="{'absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none': true} "
+                :class="{
+                  'absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none': true,
+                }"
                 role="menu"
                 aria-orientation="vertical"
                 aria-labelledby="user-menu-button"
@@ -172,13 +182,10 @@
                   id="user-menu-item-1"
                   >Settings</a
                 >
-                <a
-                  href="#"
+                <button
                   class="block px-4 py-2 text-sm text-gray-700"
-                  role="menuitem"
-                  tabindex="-1"
-                  id="user-menu-item-2"
-                  >Sign out</a
+                  @click="log_out"
+                  >Sign out</button
                 >
               </div>
             </div>
@@ -192,14 +199,22 @@
       <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
         <router-link
-            to="/"
-            :class="current_page === 'home' ? 'bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium' : 'text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium'"
-            >Home</router-link
+          to="/"
+          :class="
+            current_page === 'home'
+              ? 'bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium'
+              : 'text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium'
+          "
+          >Home</router-link
         >
         <router-link
-            to="/profile"
-            :class="current_page === 'profile' ? 'bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium' : 'text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium'"
-            >Profile</router-link
+          to="/profile"
+          :class="
+            current_page === 'profile'
+              ? 'bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium'
+              : 'text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium'
+          "
+          >Profile</router-link
         >
       </div>
       <div class="border-t border-gray-700 pb-3 pt-4">
@@ -248,10 +263,10 @@
             class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
             >Settings</a
           >
-          <a
-            href="#"
+          <button
             class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-            >Sign out</a
+            @click="log_out"
+            >Sign out</button
           >
         </div>
       </div>
@@ -260,11 +275,12 @@
 </template>
 
 <script>
+import { clearUser } from '../helpers/userService.js';
 export default {
   data() {
     return {
       current_page: "/",
-      menu_opened: false
+      menu_opened: false,
     };
   },
   mounted() {
@@ -280,15 +296,20 @@ export default {
   methods: {
     handleRouteChange(route) {
       if (route.path === "/") {
-        this.current_page = 'home'
-      } else if (route.path === '/profile') {
-        this.current_page = 'profile'
+        this.current_page = "home";
+      } else if (route.path === "/profile") {
+        this.current_page = "profile";
       }
-      console.log(this.current_page)
+      console.log(this.current_page);
     },
     picture_click() {
-      this.menu_opened = !this.menu_opened
+      this.menu_opened = !this.menu_opened;
     },
+    log_out() {
+        clearUser()
+        this.$emit('log_out');
+        this.$router.push("/");
+    }
   },
 };
 </script>
