@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import Profile from '../views/Profile.vue'
 import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
+import { getUser } from "../helpers/userService.js";
 
 const routes = [
   {
@@ -31,5 +32,18 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
+router.beforeEach((to, from, next) => {
+  const loggedIn = getUser();
+  console.log(loggedIn)
+
+  if (!loggedIn && to.name !== 'Login' && to.name !== 'home' && to.name !== 'Register') {
+    next({ name: 'home' });
+  } else {
+    next();
+  }
+});
+
+
 
 export default router;
