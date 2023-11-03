@@ -3,6 +3,8 @@ import Home from '../views/Home.vue'
 import Profile from '../views/Profile.vue'
 import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
+import RequestCar from '../views/RequestCar.vue'
+import CarRequest from '../views/CarRequest.vue'
 import { getUser } from "../helpers/userService.js";
 
 const routes = [
@@ -25,6 +27,16 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login,
+  },
+  {
+    path: "/request_car",
+    name: "RequestCar",
+    component: RequestCar,
+  },
+  {
+    path: "/car_requests/:id", // Define the route with a dynamic parameter ":id"
+    name: "CarRequest",
+    component: CarRequest, // Import and use the component for CarRequest
   },
 ];
 

@@ -73,6 +73,15 @@
               >Home</router-link
             >
             <router-link
+              to="/request_car"
+              :class="
+                current_page === 'request_car'
+                  ? 'bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium'
+                  : 'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
+              "
+              >Request Car</router-link
+            >
+            <router-link
               to="/profile"
               :class="
                 current_page === 'profile'
@@ -299,6 +308,8 @@ export default {
         this.current_page = "home";
       } else if (route.path === "/profile") {
         this.current_page = "profile";
+      } else if (route.path === "/request_car") {
+        this.current_page = "request_car";
       }
       console.log(this.current_page);
     },

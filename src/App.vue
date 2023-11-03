@@ -6,20 +6,37 @@
 </template>
 
 <script>
-  import { getUser } from './helpers/userService.js';
+  import axios from "axios";
+  import { getUser, clearUser } from './helpers/userService.js';
   export default {
     data() {
       return {
         isUserLoggedIn: false,
       }
     },
-    beforeMount() {
+    async beforeMount() {
     // Check if the user is logged in
       var user = getUser();
       if (!user) {
         this.isUserLoggedIn = false
       } else {
-        this.isUserLoggedIn = true
+        try {
+          // Check the validity of the token by making an API request
+          const response = await axios.post('http://localhost:8081/check_token', {},{
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          });
+          if (response.status === 202) {
+            this.isUserLoggedIn = true;
+          } else {
+            clearUser()
+            this.isUserLoggedIn = false;
+          }
+        } catch (error) {
+          clearUser()
+          this.isUserLoggedIn = false;
+        }
       }
     },
     methods: {
