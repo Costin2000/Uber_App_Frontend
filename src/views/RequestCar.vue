@@ -90,7 +90,7 @@ export default {
           }
         );
         console.log("Car request:", response.data);
-        this.$router.push("/");
+        this.$router.push(`/car_requests/${response.data.data.id}`);
       } catch (error) {
         if (
           error.response &&
