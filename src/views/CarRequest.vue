@@ -28,7 +28,7 @@
             <div class="w-32 font-semibold text-blue-800">City:</div>
             <div class="flex-1 text-blue-900">{{ carRequest.city }}</div>
           </div>
-          <div v-if="!requestAccepted" class="text-xl font-bold text-center mb-6 text-blue-700">
+          <div v-if="!requestAccepted && carRequest.active" class="text-xl font-bold text-center mb-6 text-blue-700">
             A driver should accept the request soon
           </div>
           <div v-else-if="carRequest.active" class="text-xl font-bold text-center mb-6 text-green-700">
@@ -50,7 +50,7 @@
             <div class="flex-1 text-blue-900">{{ carRequest.rating }}</div>
           </div>
           <button v-if="!requestAccepted && carRequest.active" class="bg-red-500 text-white py-3 px-6 rounded-md hover:bg-red-600 transition duration-300 ease-in-out focus:outline-none" @click="cancel_request">Cancel Request</button>
-          <form v-if="!carRequest.active && carRequest.rating===0 && carRequest.car_id" @submit.prevent="submitRating">
+          <form v-if="!carRequest.active && carRequest.rating===0 && carRequest.car_id.Valid" @submit.prevent="submitRating">
             <div class="flex items-center mb-6">
               <div class="w-32 font-semibold text-blue-800">Rate the Driver:</div>
               <select v-model="selectedRating" id="rating" name="rating" class="block appearance-none w-fit bg-white border border-blue-500 text-blue-900 py-3 px-4 pr-8 rounded-md leading-tight focus:outline-none focus:border-blue-600">
@@ -86,6 +86,7 @@ export default {
       driver: null,
       selectedRating: '1', // to hold the selected rating
       ratings: [1, 2, 3, 4, 5], // an array of available ratings
+      isUserLoggedIn: false,
     };
   },
   async beforeMount() {
