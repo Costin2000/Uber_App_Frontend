@@ -64,7 +64,9 @@ export default {
       },
       user: {},
       error_message: "",
-      token: ''
+      token: '',
+      carRequests: [],
+      nrActiveCars: 0
     };
   },
   methods: {
@@ -78,6 +80,11 @@ export default {
         address: this.rideRequest.address
       };
       console.log(formData);
+
+      if (this.nrActiveCars > 0) {
+        this.error_message = "You already have an active car request. Can't create another one."
+        return
+      }
 
       try {
         const response = await axios.post(
@@ -105,6 +112,29 @@ export default {
         }
       }
     },
+    async fetchCarRequests() {
+      const requestId = this.$route.params.id;
+      try {
+        const response = await axios.get(
+          `http://localhost:8082/car_requests?user_id=${this.user.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
+        );
+        this.carRequests = response.data.data.car_requests;
+        const activeCarRequests = this.carRequests.filter((car) => car.active);
+        this.nrActiveCars = activeCarRequests.length;
+        console.log("Nr active car requests: " + this.nrActiveCars)
+
+        console.log(response.data.data);
+      } catch (error) {
+        console.log(error);
+        const errorMessage = error.response.data.message;
+        this.error_message = errorMessage;
+      }
+    }
   },
   beforeMount() {
     // Check if the user is logged in
@@ -116,6 +146,7 @@ export default {
       this.user = user.user
       this.token = user.token
     }
+    this.fetchCarRequests()
   }
 };
 </script>

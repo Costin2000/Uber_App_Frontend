@@ -25,7 +25,7 @@
         v-else-if="user.type == 'driver'"
         to="/request_car"
         class="bg-white text-blue-600 font-bold py-3 px-6 rounded-full inline-block text-lg lg:text-xl hover:bg-opacity-80 transition duration-300"
-        >Need a ride?</router-link
+        >See ride requests</router-link
       >
 
     </div>

@@ -73,22 +73,13 @@
               >Home</router-link
             >
             <router-link
-              to="/request_car"
+              to="/history"
               :class="
-                current_page === 'request_car'
+                current_page === 'history'
                   ? 'bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium'
                   : 'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
               "
-              >Request Car</router-link
-            >
-            <router-link
-              to="/profile"
-              :class="
-                current_page === 'profile'
-                  ? 'bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium'
-                  : 'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
-              "
-              >Profile</router-link
+              >Ride History</router-link
             >
           </div>
         </div>
@@ -180,21 +171,13 @@
                 tabindex="-1"
               >
                 <!-- Active: "bg-gray-100", Not Active: "" -->
-                <a
-                  href="#"
+                <router-link
+                  to="/profile"
                   class="block px-4 py-2 text-sm text-gray-700"
                   role="menuitem"
                   tabindex="-1"
                   id="user-menu-item-0"
-                  >Your Profile</a
-                >
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-sm text-gray-700"
-                  role="menuitem"
-                  tabindex="-1"
-                  id="user-menu-item-1"
-                  >Settings</a
+                  >Your Profile</router-link
                 >
                 <button
                   class="block px-4 py-2 text-sm text-gray-700"
@@ -222,13 +205,13 @@
           >Home</router-link
         >
         <router-link
-          to="/profile"
+          to="/history"
           :class="
-            current_page === 'profile'
+            current_page === 'history'
               ? 'bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium'
               : 'text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium'
           "
-          >Profile</router-link
+          >Ride History</router-link
         >
       </div>
       <div class="border-t border-gray-700 pb-3 pt-4">
@@ -267,21 +250,14 @@
           </button>
         </div>
         <div class="mt-3 space-y-1 px-2 sm:px-3">
-          <a
-            href="#"
+          <router-link
+            to="/profile"
             class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-            >Your Profile</a
+            >Your Profile</router-link
           >
-          <a
-            href="#"
-            class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-            >Settings</a
-          >
-          <button
-            class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-            @click="log_out"
-            >Sign out</button
-          >
+          <button class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white w-full flex items-start" @click="log_out">
+            Sign out
+          </button>
         </div>
       </div>
     </div>
@@ -311,10 +287,8 @@ export default {
     handleRouteChange(route) {
       if (route.path === "/") {
         this.current_page = "home";
-      } else if (route.path === "/profile") {
-        this.current_page = "profile";
-      } else if (route.path === "/request_car") {
-        this.current_page = "request_car";
+      } else if (route.path === "/history") {
+        this.current_page = "history";
       }
       console.log(this.current_page);
     },

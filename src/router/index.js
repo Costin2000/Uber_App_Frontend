@@ -5,6 +5,7 @@ import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
 import RequestCar from '../views/RequestCar.vue'
 import CarRequest from '../views/CarRequest.vue'
+import RideHistory from '../views/RideHistory.vue'
 import { getUser } from "../helpers/userService.js";
 
 const routes = [
@@ -34,9 +35,14 @@ const routes = [
     component: RequestCar,
   },
   {
-    path: "/car_requests/:id", // Define the route with a dynamic parameter ":id"
+    path: "/car_requests/:id",
     name: "CarRequest",
-    component: CarRequest, // Import and use the component for CarRequest
+    component: CarRequest,
+  },
+  {
+    path: "/history",
+    name: "RideHitory",
+    component: RideHistory,
   },
 ];
 
