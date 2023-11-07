@@ -73,6 +73,7 @@
               >Home</router-link
             >
             <router-link
+              v-if="user.type === 'driver'"
               to="/my_cars"
               :class="
                 current_page === 'my_cars'
@@ -90,10 +91,20 @@
               "
               >Ride History</router-link
             >
+            <router-link
+              to="/active_rides"
+              :class="
+                current_page === 'active_rides'
+                  ? 'bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium'
+                  : 'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
+              "
+              >Pick Customer</router-link
+            >
           </div>
         </div>
         <div class="flex items-center">
           <router-link
+              v-if="user.type === 'driver'"
               to="/new_car"
               class="flex-shrink-0 mr-4"
               >
@@ -237,6 +248,16 @@
           >Home</router-link
         >
         <router-link
+          to="/my_cars"
+          v-if="user.type === 'driver'"
+          :class="
+            current_page === 'my_cars'
+              ? 'bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium'
+              : 'text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium'
+          "
+          >My Cars</router-link
+        >
+        <router-link
           to="/history"
           :class="
             current_page === 'history'
@@ -244,6 +265,15 @@
               : 'text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium'
           "
           >Ride History</router-link
+        >
+        <router-link
+          to="/active_rides"
+          :class="
+            current_page === 'active_rides'
+              ? 'bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium'
+              : 'text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium'
+          "
+          >Pick Customer</router-link
         >
       </div>
       <div class="border-t border-gray-700 pb-3 pt-4">
@@ -297,12 +327,13 @@
 </template>
 
 <script>
-import { clearUser } from '../helpers/userService.js';
+import { clearUser, getUser } from '../helpers/userService.js';
 export default {
   data() {
     return {
       current_page: "/",
       menu_opened: false,
+      user: {},
     };
   },
   mounted() {
@@ -323,6 +354,8 @@ export default {
         this.current_page = "history";
       } else if (route.path === "/my_cars") {
         this.current_page = "my_cars";
+      } else if (route.path === "/active_rides") {
+        this.current_page = "active_rides";
       }
       console.log(this.current_page);
     },
@@ -333,6 +366,12 @@ export default {
         clearUser()
         this.$emit('log_out');
         this.$router.push("/");
+    }
+  },
+  async beforeMount() {
+    var user = getUser();
+    if (user) {
+      this.user = user.user
     }
   },
 };
