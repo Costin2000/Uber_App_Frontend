@@ -6,6 +6,7 @@ import Login from '../views/Login.vue'
 import RequestCar from '../views/RequestCar.vue'
 import CarRequest from '../views/CarRequest.vue'
 import RideHistory from '../views/RideHistory.vue'
+import MyCars from '../views/MyCars.vue'
 import { getUser } from "../helpers/userService.js";
 
 const routes = [
@@ -43,6 +44,11 @@ const routes = [
     path: "/history",
     name: "RideHitory",
     component: RideHistory,
+  },
+  {
+    path: "/my_cars",
+    name: "MyCars",
+    component: MyCars,
   },
 ];
 

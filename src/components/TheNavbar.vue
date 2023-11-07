@@ -73,6 +73,15 @@
               >Home</router-link
             >
             <router-link
+              to="/my_cars"
+              :class="
+                current_page === 'my_cars'
+                  ? 'bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium'
+                  : 'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
+              "
+              >My cars</router-link
+            >
+            <router-link
               to="/history"
               :class="
                 current_page === 'history'
@@ -84,6 +93,29 @@
           </div>
         </div>
         <div class="flex items-center">
+          <router-link
+              to="/new_car"
+              class="flex-shrink-0 mr-4"
+              >
+
+            <button
+              type="button"
+              class="relative inline-flex items-center gap-x-1.5 rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+            >
+              <svg
+                class="-ml-0.5 h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z"
+                />
+              </svg>
+              Add car
+            </button>
+          </router-link
+            >
           <router-link
               to="/request_car"
               class="flex-shrink-0"
@@ -289,6 +321,8 @@ export default {
         this.current_page = "home";
       } else if (route.path === "/history") {
         this.current_page = "history";
+      } else if (route.path === "/my_cars") {
+        this.current_page = "my_cars";
       }
       console.log(this.current_page);
     },
