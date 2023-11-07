@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="bg-gradient-to-br from-blue-300 to-blue-500 ">
         <notification :message="errorNotif" @clear="clearError" />
     <div class="bg-gradient-to-br from-blue-300 to-blue-500 ">
         <div
