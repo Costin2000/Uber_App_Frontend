@@ -31,11 +31,8 @@
           <div v-if="!requestAccepted && carRequest.active" class="text-xl font-bold text-center mb-6 text-blue-700">
             A driver should accept the request soon
           </div>
-          <div v-else-if="carRequest.active" class="text-xl font-bold text-center mb-6 text-green-700">
-            A driver accepted the request and is on the way!
-          </div>
-          <div v-else class="text-xl font-bold text-center mb-6 text-green-700">
-            The car request is not active anymore
+          <div v-else-if="!carRequest.active" class="text-xl font-bold text-center mb-6 text-green-700">
+            Car request accepted! Please don't forget to rate the ride!
           </div>
           <div v-if="car" class="flex items-center mb-6">
             <div class="w-32 font-semibold text-blue-800">Car model:</div>

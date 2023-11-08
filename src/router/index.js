@@ -9,6 +9,7 @@ import RideHistory from '../views/RideHistory.vue'
 import MyCars from '../views/MyCars.vue'
 import NewCar from '../views/NewCar.vue'
 import ActiveRides from '../views/ActiveRides.vue'
+import CustomerCarRequest from '../views/CustomerCarRequest.vue'
 import { getUser } from "../helpers/userService.js";
 
 const routes = [
@@ -62,6 +63,11 @@ const routes = [
     name: "ActiveRides",
     component: ActiveRides,
   },
+  {
+    path: "/customer_car_requests/:id",
+    name: "CustomerCarRequest",
+    component: CustomerCarRequest,
+  }
 ];
 
 const router = createRouter({

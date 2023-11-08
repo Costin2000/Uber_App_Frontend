@@ -93,6 +93,7 @@
             >
             <router-link
               to="/active_rides"
+              v-if="user.type === 'driver'"
               :class="
                 current_page === 'active_rides'
                   ? 'bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium'
