@@ -10,6 +10,7 @@ import MyCars from '../views/MyCars.vue'
 import NewCar from '../views/NewCar.vue'
 import ActiveRides from '../views/ActiveRides.vue'
 import CustomerCarRequest from '../views/CustomerCarRequest.vue'
+import MyServices from '../views/MyServices.vue'
 import { getUser } from "../helpers/userService.js";
 
 const routes = [
@@ -67,7 +68,12 @@ const routes = [
     path: "/customer_car_requests/:id",
     name: "CustomerCarRequest",
     component: CustomerCarRequest,
-  }
+  },
+  {
+    path: "/my_services",
+    name: "MyServices",
+    component: MyServices,
+  },
 ];
 
 const router = createRouter({

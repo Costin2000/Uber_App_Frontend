@@ -101,6 +101,16 @@
               "
               >Pick Customer</router-link
             >
+            <router-link
+              to="/my_services"
+              v-if="user.type === 'driver'"
+              :class="
+                current_page === 'my_services'
+                  ? 'bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium'
+                  : 'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
+              "
+              >My Services</router-link
+            >
           </div>
         </div>
         <div class="flex items-center">
@@ -269,12 +279,23 @@
         >
         <router-link
           to="/active_rides"
+          v-if="user.type === 'driver'"
           :class="
             current_page === 'active_rides'
               ? 'bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium'
               : 'text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium'
           "
           >Pick Customer</router-link
+        >
+        <router-link
+          to="/my_services"
+          v-if="user.type === 'driver'"
+          :class="
+            current_page === 'my_services'
+              ? 'bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium'
+              : 'text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium'
+          "
+          >My Services</router-link
         >
       </div>
       <div class="border-t border-gray-700 pb-3 pt-4">
@@ -357,6 +378,8 @@ export default {
         this.current_page = "my_cars";
       } else if (route.path === "/active_rides") {
         this.current_page = "active_rides";
+      } else if (route.path === "/my_services") {
+        this.current_page = "my_services";
       }
       console.log(this.current_page);
     },
