@@ -100,6 +100,8 @@
         token: "",
         isUserLoggedIn: false,
         error_message: "",
+        car: null,
+        to_search: ""
       };
     },
     async beforeMount() {
@@ -113,15 +115,21 @@
         this.token = user.token;
         console.log(user.user);
       }
+      await this.fetchActiveCar();
       await this.fetchCarRequests();
       this.startPolling();
     },
     methods: {
       async fetchCarRequests() {
-        const requestId = this.$route.params.id;
+        //console.log("CAR TYPE: " + this.to_search)
         try {
+          var link = `http://localhost:8082/car_requests?city=${this.user.city}&active=true`
+          if (this.to_search == "normal") {
+            link = `http://localhost:8082/car_requests?car_type=normal&city=${this.user.city}&active=true`
+          }
+          
           const response = await axios.get(
-            `http://localhost:8082/car_requests?car_type=normal&city=Bucuresti&active=true`,
+            link,
             {
               headers: {
                 Authorization: `Bearer ${this.token}`,
@@ -131,6 +139,37 @@
           this.carRequests = response.data.data.car_requests;
           this.removeDriverCarRequests()
           console.log(response.data.data);
+        } catch (error) {
+          console.log(error);
+          const errorMessage = error.response.data.message;
+          this.error_message = errorMessage;
+        }
+      },
+      async fetchActiveCar() {
+        try {
+          const response = await axios.get(`http://localhost:8082/cars`, {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          });
+          //this.carRequests = response.data.data.car_requests;
+          //console.log(response.data.data);
+          var cars = response.data.data.cars;
+          var active_cars = cars.filter((car) => {
+            return car.active === true;
+          });
+          if (active_cars.length > 0) {
+            this.car = active_cars[0];
+            if (this.car.car_type === "lux") {
+              this.to_search = "any"
+            } else {
+              this.to_search = "normal"
+            } 
+          } else {
+            this.error_message = "You should have a car in use"
+          }
+
+          console.log(active_cars[0]);
         } catch (error) {
           console.log(error);
           const errorMessage = error.response.data.message;

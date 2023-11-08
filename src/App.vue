@@ -41,7 +41,9 @@
     },
     methods: {
       logout() {
-        this.isUserLoggedIn = false
+        clearUser()
+        this.isUserLoggedIn = false;
+        this.$router.push("/");
       },
       login() {
         this.isUserLoggedIn = true

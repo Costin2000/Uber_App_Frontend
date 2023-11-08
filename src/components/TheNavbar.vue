@@ -387,9 +387,7 @@ export default {
       this.menu_opened = !this.menu_opened;
     },
     log_out() {
-        clearUser()
         this.$emit('log_out');
-        this.$router.push("/");
     }
   },
   async beforeMount() {

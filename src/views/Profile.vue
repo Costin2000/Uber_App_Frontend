@@ -115,6 +115,7 @@ export default {
         last_name: this.lastname,
         city: this.city
       };
+      console.log(formData)
 
       try {
         const response = await axios.put(`http://localhost:8081/users/${this.user.id}`, formData, {
@@ -122,7 +123,11 @@ export default {
             Authorization: `Bearer ${this.token}`,
           },
         });
-        //console.log(response.data.data)
+        console.log(response)
+        const storedUserData = JSON.parse(localStorage.getItem("user"));
+        storedUserData.data.user = response.data.data;
+        localStorage.setItem("user", JSON.stringify(storedUserData));
+
         this.user = response.data.data
       } catch (error) {
         console.error('Error submitting rating:', error);

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-gradient-to-br from-blue-300 to-blue-500 "
+    class="bg-gradient-to-br from-blue-300 to-blue-500"
   >
     <div
       v-if="error_message"
@@ -20,8 +20,8 @@
         </div>
       </div>
     </div>
-    <div class="bg-gradient-to-br from-blue-300 to-blue-500 h-screen" style="height: calc(100vh - 4rem)">
-      <div v-if="carRequests.length > 0" class="overflow-x-auto mt-4 px-4">
+    <div class="bg-gradient-to-br from-blue-300 to-blue-500 h-screen w-full flex flex-col">
+      <div v-if="carRequests.length > 0" class="overflow-auto mt-4 px-4">
         <table class="min-w-full bg-white rounded-lg overflow-hidden border">
           <thead class="bg-gray-800 text-white">
             <tr>
