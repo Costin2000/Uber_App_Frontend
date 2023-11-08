@@ -103,7 +103,7 @@
         const requestId = this.$route.params.id;
         try {
           const response = await axios.get(
-            `http://localhost:8082/car_requests?car_type=lux&city=Bucuresti&active=true`,
+            `http://localhost:8082/car_requests?car_type=normal&city=Bucuresti&active=true`,
             {
               headers: {
                 Authorization: `Bearer ${this.token}`,

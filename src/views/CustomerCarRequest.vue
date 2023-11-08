@@ -49,24 +49,38 @@
             <div class="flex-1 text-blue-900">{{ carRequest.city }}</div>
           </div>
           <div
-            v-if="!requestAccepted && carRequest.active"
+            v-if="!this.carRequest.car_id.Valid && carRequest.active"
             class="text-xl font-bold text-center mb-6 text-blue-700"
           >
             Accept the request?
           </div>
           <div
-            v-else
+            v-if="this.carRequest.car_id.Valid && carRequest.active"
             class="text-xl font-bold text-center mb-6 text-blue-700"
           >
             The customer is waiting for you!
           </div>
           <button
-            v-if="!requestAccepted && carRequest.active"
+            v-if="!this.carRequest.car_id.Valid && carRequest.active"
             class="bg-blue-500 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none"
             @click="accept_request"
           >
             Accept
           </button>
+          <button
+            v-if="this.carRequest.car_id.Valid && carRequest.active"
+            class="bg-blue-500 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none"
+            @click="finish_ride"
+          >
+            Mark Ride as Finished
+          </button>
+          <div
+            v-if="this.carRequest.car_id.Valid && !carRequest.active"
+            class="text-xl font-bold text-center mb-6 text-blue-700"
+          >
+            The Ride is Finished
+          </div>
+
         </div>
         <img
           src="https://apex4-production.s3.eu-west-1.amazonaws.com/tenant_ff5dd0aaad1c44e6909d6ce92e6670c4/media/uploads/carsa-hp-we-make-it-easy.png"
@@ -150,11 +164,7 @@ export default {
       }
     },
     async accept_request() {
-      const put_data = {
-        active: false,
-        car_id: null,
-        rating: 5,
-      };
+
       if(!this.car) {
         this.error_notif = "You do not have a car in use"
         return
@@ -163,8 +173,27 @@ export default {
         //const requestId = this.$route.params.id;
         await axios.put(`http://localhost:8082/car_requests/${this.carRequest.id}`, {
           rating: this.carRequest.rating,   
-          active: false,
+          active: true,
           car_id: this.car.id,
+        }, {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+        });
+
+        this.carRequest.car_id = { Int64: this.car.id, Valid: true }
+      } catch (error) {
+        console.error('Error submitting rating:', error);
+      }
+
+    },
+    async finish_ride() {
+      try {
+        //const requestId = this.$route.params.id;
+        await axios.put(`http://localhost:8082/car_requests/${this.carRequest.id}`, {
+          rating: this.carRequest.rating,   
+          active: false,
+          car_id: this.carRequest.car_id.Int64,
         }, {
           headers: {
             Authorization: `Bearer ${this.token}`,
@@ -175,7 +204,6 @@ export default {
       } catch (error) {
         console.error('Error submitting rating:', error);
       }
-
     },
   },
 };
